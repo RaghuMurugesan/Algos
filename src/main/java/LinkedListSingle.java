@@ -3,8 +3,7 @@
  */
 
 package main.java;
-import java.util.Scanner;
-
+import java.io.Console;
 
 
 public class LinkedListSingle{
@@ -13,7 +12,7 @@ public class LinkedListSingle{
 	private int listLength;
 
 	LinkedListSingle (){
-		list = null;
+		list = new Node();
 		listLength = 0;
 	}
 	
@@ -47,14 +46,16 @@ public class LinkedListSingle{
 				deleteCount ++;
 				thisNode = nextNode;
 				}
-
-			if ( deleteCount != 0) {
-				System.out.println("Deletion Completed. Total Nodes deleted = "+ deleteCount);
-			}
-			else {
-				System.out.println("No Match found");
-			}
+			thisNode = thisNode.getNextNode();
 		}
+
+		if ( deleteCount != 0) {
+			System.out.println("Deletion Completed. Total Nodes deleted = "+ deleteCount);
+		}
+		else {
+			System.out.println("No Match found");
+		}
+
 	}
 
 	public void printList(){
@@ -67,7 +68,7 @@ public class LinkedListSingle{
 			System.out.println(temp.getData());
 			temp = temp.getNextNode();
 		}
-		System.out.println("List length = \n"+ listLength +"Done");
+		System.out.format("List length = %d\n\n", listLength);
 	}
 	
 	public static void main(String[] args) {
@@ -101,30 +102,22 @@ public class LinkedListSingle{
 			System.out.println("No List Created");
 		}
 		int a = 1;
+		Console console = System.console();
 		while (a > 0) {
-			System.out.println("Enter input");
-			System.out.println("1 : Add data");
-			System.out.println("2 : Delete Data");
-			System.out.println("3 : Print List");
-			System.out.println("\nEnter you response");
-
+			a = Integer.parseInt(console.readLine("\n1 : Add data"
+					+ "\t2 : Delete Data"
+					+ "\t3 : Print List"
+					+ "\nEnter you response : "));
 			if(a == 1) {
-
-				System.out.println("Enter a number");
-				Scanner in = new Scanner(System.in);
-				in.close();
-				int data = in.nextInt();
-
+				int data = Integer.parseInt(console.readLine("Enter data : "));
+				
 				if(testList.addData(data) == 1) {
 					System.out.println("Data = " + data + "added successfully" );
 				}
 			}
 			
 			if(a == 2) {
-				System.out.println("Enter a number");
-				Scanner in = new Scanner(System.in);
-				in.close();
-				int data = in.nextInt();
+				int data = Integer.parseInt(console.readLine("Enter data : "));
 			
 				testList.deleteNodeByData(data);
 			}
