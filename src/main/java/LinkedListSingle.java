@@ -1,103 +1,98 @@
+package main.java;
+
 /**
  * @author: Raghu Murugesan
  */
-
-package main.java;
 import java.io.Console;
 
+public class LinkedListSingle {
 
-public class LinkedListSingle{
-
-	private Node list;
+	private Node head;
 	private int listLength;
 
-	LinkedListSingle (){
-		list = new Node();
+	LinkedListSingle() {
+		head = new Node();
 		listLength = 0;
 	}
-	
+
 	public int addData(int data) {
-		Node newNode = new Node();
-		newNode.setData(data);
-		Node temp = this.list.getLastNode();
+		Node newNode = new Node(data);
+		Node temp = head.getLastNode();
 		temp.setNextNode(newNode);
-		this.listLength ++;
-		return(1);
-//		System.out.println("");
+		this.listLength++;
+		return (1);
 	}
 
 	public void deleteNodeByData(int data) {
-		Node previousNode = this.list;
-
-		Node thisNode = previousNode.getNextNode();
-
-		if (thisNode == null)
-		{	
+		if (this.listLength <= 0) {
 			System.out.println("List is Empty");
 			return;
 		}
+
+		Node previousNode = head;
+		Node thisNode = previousNode.getNextNode();
+		Node nextNode = thisNode.getNextNode();
 		int deleteCount = 0;
-		while(thisNode != null) {
 
-			if (thisNode.getData() == data ) {
-				Node nextNode = thisNode.getNextNode();
+		while (thisNode != null) {
+
+			if (thisNode.getData() == data) {
 				previousNode.setNextNode(nextNode);
-				this.listLength --;
-				deleteCount ++;
-				thisNode = nextNode;
-				}
-			thisNode = thisNode.getNextNode();
-		}
+				this.listLength -= 1;
+				deleteCount += 1;
+			} else {
+				previousNode = thisNode;
+			}
 
-		if ( deleteCount != 0) {
-			System.out.println("Deletion Completed. Total Nodes deleted = "+ deleteCount);
+			thisNode = thisNode.getNextNode();
+			if (thisNode != null) {
+				nextNode = thisNode.getNextNode();
+			}
 		}
-		else {
+		if (deleteCount != 0) {
+			System.out.println("Deletion Completed. Total Nodes deleted = "
+					+ deleteCount);
+		} else {
 			System.out.println("No Match found");
 		}
-
 	}
 
-	public void printList(){
-		Node temp = list.getNextNode();
+	public void printList() {
+		Node temp = head.getNextNode();
 		if (temp == null) {
 			System.out.println("List Empty");
 			return;
 		}
+		System.out.println("");
 		while (temp != null) {
 			System.out.println(temp.getData());
 			temp = temp.getNextNode();
 		}
-		System.out.format("List length = %d\n\n", listLength);
+		System.out.format("\nList length = %d\n\n", listLength);
 	}
-	
+
 	public static void main(String[] args) {
 
 		LinkedListSingle testList = new LinkedListSingle();
-		
 		if (args.length > 0) {
-
 			int data;
-			double dataCount = 0;
+			long dataCount = 0;
 			System.out.println("Singly linked list created");
-			
-			for (String s: args) {
-				
+			for (String s : args) {
 				try {
-			        data = Integer.parseInt(s);
-			    } catch (NumberFormatException e) {
-			        System.err.println("Argument" + s + " must be an integer.");
-			        continue;
-			    }
-				
+					data = Integer.parseInt(s);
+				} catch (NumberFormatException e) {
+					System.err.println("Argument" + s + " must be an integer.");
+					continue;
+				}
 				testList.addData(data);
-				dataCount ++;
+				dataCount++;
 			}
 
-			System.out.println("Data added to the list \n\n'Total data added = "+ dataCount);
+			System.out.format(" => Data added to the list! =>"
+					+ "Total data added = %d", dataCount);
 
-		}
-		else {
+		} else {
 			testList = null;
 			System.out.println("No List Created");
 		}
@@ -105,24 +100,23 @@ public class LinkedListSingle{
 		Console console = System.console();
 		while (a > 0) {
 			a = Integer.parseInt(console.readLine("\n1 : Add data"
-					+ "\t2 : Delete Data"
-					+ "\t3 : Print List"
+					+ "\t2 : Delete Data" + "\t3 : Print List" + "\t0 : Exit"
 					+ "\nEnter you response : "));
-			if(a == 1) {
+			if (a == 1) {
 				int data = Integer.parseInt(console.readLine("Enter data : "));
-				
-				if(testList.addData(data) == 1) {
-					System.out.println("Data = " + data + "added successfully" );
+
+				if (testList.addData(data) == 1) {
+					System.out.format("\nData = %d added successfully", data);
 				}
 			}
-			
-			if(a == 2) {
+
+			if (a == 2) {
 				int data = Integer.parseInt(console.readLine("Enter data : "));
-			
+
 				testList.deleteNodeByData(data);
 			}
 
-			if(a == 3) {
+			if (a == 3) {
 				testList.printList();
 			}
 		}

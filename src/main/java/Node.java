@@ -3,12 +3,18 @@ package main.java;
 
 public class Node {
 
-	private int data;
+	public int data;
 	
 	private Node next;
 	
 	
 	public Node () {
+		this.data = -1;
+		this.next = null;
+	}
+	
+	public Node (int data) {
+		this.data = data;
 		this.next = null;
 	}
 	
